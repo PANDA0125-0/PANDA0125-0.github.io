@@ -1,6 +1,52 @@
-/**
- * Created by JYL on 2014/6/8.
- */
+// 初始化变量以存储触摸的起始位置
+var startX, startY;
+
+document.addEventListener("touchstart", function(event) {
+    // 记录触摸起始位置
+    startX = event.touches[0].pageX;
+    startY = event.touches[0].pageY;
+});
+
+document.addEventListener("touchend", function(event) {
+    // 记录触摸结束位置
+    var endX = event.changedTouches[0].pageX;
+    var endY = event.changedTouches[0].pageY;
+
+    // 计算滑动距离
+    var deltaX = endX - startX;
+    var deltaY = endY - startY;
+
+    // 判断滑动方向（水平滑动距离大于垂直滑动距离时，判断为水平滑动）
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX > 50) {
+            // 向右滑动
+            if (moveRight()) {
+                setTimeout(generateOneNumber, 210);
+                setTimeout(isgameover, 300);
+            }
+        } else if (deltaX < -50) {
+            // 向左滑动
+            if (moveLeft()) {
+                setTimeout(generateOneNumber, 210);
+                setTimeout(isgameover, 300);
+            }
+        }
+    } else {
+        if (deltaY > 50) {
+            // 向下滑动
+            if (moveDown()) {
+                setTimeout(generateOneNumber, 210);
+                setTimeout(isgameover, 300);
+            }
+        } else if (deltaY < -50) {
+            // 向上滑动
+            if (moveUp()) {
+                setTimeout(generateOneNumber, 210);
+                setTimeout(isgameover, 300);
+            }
+        }
+    }
+});
 $(document).keydown(function (event) {
     switch (event.keyCode) {
         case 37://left
